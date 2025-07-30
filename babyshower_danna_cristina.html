@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Shower - Danna Cristina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@300;400;500;600&family=Lora:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f1ec 0%, #f0ebe4 50%, #ebe6df 100%);
+            height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Nubes flotantes animadas */
+        .clouds-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Estilos base para las nubes */
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            opacity: 0.7;
+            filter: blur(1px);
+        }
+
+        .cloud:before,
+        .cloud:after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+        }
+
+        /* Nube pequeña */
+        .cloud-small {
+            width: 60px;
+            height: 20px;
+            animation: float-left 25s infinite linear;
+        }
+
+        .cloud-small:before {
+            width: 30px;
+            height: 30px;
+            top: -15px;
+            left: 10px;
+        }
+
+        .cloud-small:after {
+            width: 40px;
+            height: 25px;
+            top: -10px;
+            right: 5px;
+        }
+
+        /* Nube mediana */
+        .cloud-medium {
+            width: 80px;
+            height: 30px;
+            animation: float-right 35s infinite linear;
+        }
+
+        .cloud-medium:before {
+            width: 40px;
+            height: 40px;
+            top: -20px;
+            left: 15px;
+        }
+
+        .cloud-medium:after {
+            width: 50px;
+            height: 35px;
+            top: -15px;
+            right: 10px;
+        }
+
+        /* Nube grande */
+        .cloud-large {
+            width: 100px;
+            height: 40px;
+            animation: float-left 45s infinite linear;
+        }
+
+        .cloud-large:before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 20px;
+        }
+
+        .cloud-large:after {
+            width: 60px;
+            height: 45px;
+            top: -20px;
+            right: 15px;
+        }
+
+        /* Animaciones de movimiento */
+        @keyframes float-left {
+            0% {
+                transform: translateX(-100px) translateY(0px);
+            }
+            25% {
+                transform: translateX(25vw) translateY(-10px);
+            }
+            50% {
+                transform: translateX(50vw) translateY(5px);
+            }
+            75% {
+                transform: translateX(75vw) translateY(-5px);
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px)) translateY(0px);
+            }
+        }
+
+        @keyframes float-right {
+            0% {
+                transform: translateX(calc(100vw + 100px)) translateY(0px);
+            }
+            25% {
+                transform: translateX(75vw) translateY(8px);
+            }
+            50% {
+                transform: translateX(50vw) translateY(-8px);
+            }
+            75% {
+                transform: translateX(25vw) translateY(3px);
+            }
+            100% {
+                transform: translateX(-100px) translateY(0px);
+            }
+        }
+
+        /* Nubes con diferentes posiciones y retrasos */
+        .cloud-1 { top: 10%; animation-delay: 0s; }
+        .cloud-2 { top: 20%; animation-delay: -8s; }
+        .cloud-3 { top: 30%; animation-delay: -15s; }
+        .cloud-4 { top: 40%; animation-delay: -22s; }
+        .cloud-5 { top: 50%; animation-delay: -30s; }
+        .cloud-6 { top: 60%; animation-delay: -5s; }
+        .cloud-7 { top: 70%; animation-delay: -12s; }
+        .cloud-8 { top: 80%; animation-delay: -18s; }
+        .cloud-9 { top: 15%; animation-delay: -25s; }
+        .cloud-10 { top: 35%; animation-delay: -35s; }
+        .cloud-11 { top: 55%; animation-delay: -40s; }
+        .cloud-12 { top: 75%; animation-delay: -45s; }
+
+        /* Variaciones de opacidad y tamaño */
+        .cloud-variant-1 { opacity: 0.3; transform: scale(0.8); }
+        .cloud-variant-2 { opacity: 0.5; transform: scale(1.2); }
+        .cloud-variant-3 { opacity: 0.4; transform: scale(0.9); }
+        .cloud-variant-4 { opacity: 0.6; transform: scale(1.1); }
+
+        /* Nubes realistas de fondo como en las imágenes */
+        .background-clouds {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(ellipse 200px 100px at 20% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse 150px 80px at 80% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse 300px 150px at 60% 70%, rgba(255, 255, 255, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse 180px 90px at 10% 80%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse 250px 120px at 90% 60%, rgba(255, 255, 255, 0.35) 0%, transparent 50%);
+            animation: cloudDrift 40s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .background-clouds::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(ellipse 160px 80px at 40% 10%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse 220px 110px at 70% 90%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse 190px 95px at 30% 50%, rgba(255, 255, 255, 0.35) 0%, transparent 50%);
+            animation: cloudDrift 60s ease-in-out infinite reverse;
+        }
+
+        @keyframes cloudDrift {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            25% { transform: translateX(20px) translateY(-10px); }
+            50% { transform: translateX(-15px) translateY(5px); }
+            75% { transform: translateX(10px) translateY(-5px); }
+        }
+
+        /* Pantalla de inicio */
+        .start-screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 1.5s ease-out;
+            padding: 40px 20px;
+        }
+
+        .start-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .teddy-main {
+            width: 180px;
+            height: 180px;
+            background: #c9a882;
+            border-radius: 50%;
+            position: relative;
+            margin-bottom: 50px;
+            animation: gentleFloat 4s ease-in-out infinite;
+            filter: drop-shadow(0 15px 25px rgba(201, 168, 130, 0.3));
+        }
+
+        .teddy-main::before {
+            content: '';
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            background: #c9a882;
+            border-radius: 50%;
+            top: -18px;
+            left: 20px;
+            filter: drop-shadow(0 5px 10px rgba(201, 168, 130, 0.2));
+        }
+
+        .teddy-main::after {
+            content: '';
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            background: #c9a882;
+            border-radius: 50%;
+            top: -18px;
+            right: 20px;
+            filter: drop-shadow(0 5px 10px rgba(201, 168, 130, 0.2));
+        }
+
+        .teddy-face {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .teddy-eyes {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #8b6f47;
+            border-radius: 50%;
+            top: -12px;
+            left: -20px;
+        }
+
+        .teddy-eyes::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #8b6f47;
+            border-radius: 50%;
+            left: 30px;
+        }
+
+        .teddy-nose {
+            position: absolute;
+            width: 6px;
+            height: 5px;
+            background: #8b6f47;
+            border-radius: 50%;
+            top: 2px;
+            left: -3px;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .start-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 48px;
+            color: #a08770;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .start-subtitle {
+            font-family: 'Lora', serif;
+            font-size: 16px;
+            color: #9d8b7a;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .play-button {
+            background: linear-gradient(135deg, #c9a882 0%, #b8976f 100%);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 25px;
+            color: white;
+            font-family: 'Lora', serif;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(201, 168, 130, 0.3);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .play-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(201, 168, 130, 0.4);
+        }
+
+        /* Contenido principal sin cards */
+        .main-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-teddy {
+            width: 120px;
+            height: 120px;
+            background: #c9a882;
+            border-radius: 50%;
+            position: relative;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 10px 20px rgba(201, 168, 130, 0.3));
+            animation: teddySway 3s ease-in-out infinite;
+        }
+
+        .slide-teddy::before {
+            content: '';
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: #c9a882;
+            border-radius: 50%;
+            top: -12px;
+            left: 15px;
+        }
+
+        .slide-teddy::after {
+            content: '';
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background: #c9a882;
+            border-radius: 50%;
+            top: -12px;
+            right: 15px;
+        }
+
+        .slide-teddy .teddy-face {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .slide-teddy .teddy-eyes {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #8b6f47;
+            border-radius: 50%;
+            top: -8px;
+            left: -15px;
+        }
+
+        .slide-teddy .teddy-eyes::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #8b6f47;
+            border-radius: 50%;
+            left: 22px;
+        }
+
+        .slide-teddy .teddy-nose {
+            position: absolute;
+            width: 5px;
+            height: 4px;
+            background: #8b6f47;
+            border-radius: 50%;
+            top: 2px;
+            left: -2px;
+        }
+
+        @keyframes teddySway {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .slide-text {
+            font-family: 'Lora', serif;
+            font-size: 22px;
+            color: #8b7866;
+            line-height: 1.8;
+            max-width: 350px;
+            margin-bottom: 30px;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        .slide-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 36px;
+            color: #a08770;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .parents-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .parents-label {
+            font-family: 'Lora', serif;
+            font-size: 18px;
+            color: #9d8b7a;
+            font-weight: 300;
+            margin-bottom: 15px;
+        }
+
+        .parents-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 32px;
+            color: #a08770;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .event-info {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .event-item {
+            font-family: 'Lora', serif;
+            font-size: 18px;
+            color: #8b7866;
+            margin: 15px 0;
+            font-weight: 400;
+        }
+
+        .event-label {
+            color: #a08770;
+            font-weight: 500;
+        }
+
+        .baby-name-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .baby-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 54px;
+            color: #a08770;
+            font-weight: 400;
+            margin-bottom: 25px;
+            animation: nameGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes nameGlow {
+            0%, 100% { filter: drop-shadow(0 2px 8px rgba(160, 135, 112, 0.3)); }
+            50% { filter: drop-shadow(0 4px 15px rgba(160, 135, 112, 0.5)); }
+        }
+
+        .final-message {
+            font-family: 'Lora', serif;
+            font-size: 18px;
+            color: #9d8b7a;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        /* Navegación minimalista */
+        .navigation {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 20;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(160, 135, 112, 0.4);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .nav-dot.active {
+            background: #a08770;
+            transform: scale(1.4);
+        }
+
+        .music-control {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(160, 135, 112, 0.3);
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 30;
+            font-size: 18px;
+            color: #a08770;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-control:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: scale(1.05);
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 480px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            
+            .slide-text {
+                font-size: 18px;
+                line-height: 1.7;
+                max-width: 300px;
+            }
+            
+            .slide-title {
+                font-size: 30px;
+            }
+            
+            .start-title {
+                font-size: 40px;
+            }
+            
+            .baby-name {
+                font-size: 44px;
+            }
+            
+            .parents-names {
+                font-size: 28px;
+            }
+            
+            .slide-teddy {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .teddy-main {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .event-item {
+                font-size: 16px;
+            }
+            
+            .navigation {
+                bottom: 40px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .slide-text {
+                font-size: 16px;
+                max-width: 280px;
+            }
+            
+            .baby-name {
+                font-size: 38px;
+            }
+            
+            .start-title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Nubes flotantes animadas -->
+        <div class="clouds-container">
+            <!-- Nubes que van de izquierda a derecha -->
+            <div class="cloud cloud-small cloud-1"></div>
+            <div class="cloud cloud-medium cloud-2 cloud-variant-1"></div>
+            <div class="cloud cloud-large cloud-3 cloud-variant-2"></div>
+            <div class="cloud cloud-small cloud-4 cloud-variant-3"></div>
+            <div class="cloud cloud-medium cloud-5"></div>
+            <div class="cloud cloud-large cloud-6 cloud-variant-4"></div>
+            
+            <!-- Nubes que van de derecha a izquierda -->
+            <div class="cloud cloud-small cloud-7 cloud-variant-1"></div>
+            <div class="cloud cloud-medium cloud-8"></div>
+            <div class="cloud cloud-large cloud-9 cloud-variant-2"></div>
+            <div class="cloud cloud-small cloud-10 cloud-variant-3"></div>
+            <div class="cloud cloud-medium cloud-11 cloud-variant-4"></div>
+            <div class="cloud cloud-large cloud-12"></div>
+        </div>
+
+        <!-- Nubes de fondo realistas -->
+        <div class="background-clouds"></div>
+
+        <!-- Pantalla de inicio -->
+        <div class="start-screen" id="startScreen">
+            <div class="teddy-main">
+                <div class="teddy-face">
+                    <div class="teddy-eyes"></div>
+                    <div class="teddy-nose"></div>
+                </div>
+            </div>
+            <h1 class="start-title">Baby Shower</h1>
+            <p class="start-subtitle">Una celebración llena de amor</p>
+            <button class="play-button" onclick="startPresentation()">▶ Comenzar</button>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="main-content" id="mainContent">
+            <!-- Slide 1: Agradecimiento -->
+            <div class="slide active" id="slide1">
+                <div class="slide-teddy">
+                    <div class="teddy-face">
+                        <div class="teddy-eyes"></div>
+                        <div class="teddy-nose"></div>
+                    </div>
+                </div>
+                <div class="slide-text">
+                    Damos gracias al Señor por la nueva vida que crece dentro de mami y se alimenta con el amor de papá
+                </div>
+            </div>
+
+            <!-- Slide 2: Amor multiplicado -->
+            <div class="slide" id="slide2">
+                <div class="slide-teddy">
+                    <div class="teddy-face">
+                        <div class="teddy-eyes"></div>
+                        <div class="teddy-nose"></div>
+                    </div>
+                </div>
+                <div class="slide-text">
+                    El amor se multiplicará en esta familia. Gracias por ser parte de esta gran alegría
+                </div>
+            </div>
+
+            <!-- Slide 3: Los padres -->
+            <div class="slide" id="slide3">
+                <div class="slide-teddy">
+                    <div class="teddy-face">
+                        <div class="teddy-eyes"></div>
+                        <div class="teddy-nose"></div>
+                    </div>
+                </div>
+                <div class="parents-section">
+                    <div class="parents-label">Mis papis</div>
+                    <div class="parents-names">Cristopher & Marianella</div>
+                </div>
+                <div class="slide-text">
+                    Están muy felices de compartir este momento contigo para darme la bienvenida al mundo
+                </div>
+            </div>
+
+            <!-- Slide 4: Detalles del evento -->
+            <div class="slide" id="slide4">
+                <div class="slide-teddy">
+                    <div class="teddy-face">
+                        <div class="teddy-eyes"></div>
+                        <div class="teddy-nose"></div>
+                    </div>
+                </div>
+                <div class="slide-title">Te esperamos</div>
+                <div class="event-info">
+                    <div class="event-item">
+                        <span class="event-label">Fecha:</span> Sábado 23 de Agosto
+                    </div>
+                    <div class="event-item">
+                        <span class="event-label">Hora:</span> 6:00 PM
+                    </div>
+                    <div class="event-item">
+                        <span class="event-label">Lugar:</span> Casa de mis papis
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Despedida -->
+            <div class="slide" id="slide5">
+                <div class="slide-teddy">
+                    <div class="teddy-face">
+                        <div class="teddy-eyes"></div>
+                        <div class="teddy-nose"></div>
+                    </div>
+                </div>
+                <div class="baby-name-section">
+                    <div class="baby-name">Danna Cristina</div>
+                    <div class="slide-text">¡Te esperamos juntos!</div>
+                    <div class="final-message">Con amor, la familia ❤️</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegación -->
+        <div class="navigation" id="navigation" style="display: none;">
+            <div class="nav-dot active" onclick="goToSlide(0)"></div>
+            <div class="nav-dot" onclick="goToSlide(1)"></div>
+            <div class="nav-dot" onclick="goToSlide(2)"></div>
+            <div class="nav-dot" onclick="goToSlide(3)"></div>
+            <div class="nav-dot" onclick="goToSlide(4)"></div>
+        </div>
+
+        <!-- Control de música 
+        <button class="music-control" id="musicControl" onclick="toggleMusic()" style="display: none;">🔇</button>
+    -->
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        let slideInterval;
+        let musicPlaying = false;
+
+        function startPresentation() {
+            const startScreen = document.getElementById('startScreen');
+            const mainContent = document.getElementById('mainContent');
+            const navigation = document.getElementById('navigation');
+            //const musicControl = document.getElementById('musicControl');
+
+            startScreen.classList.add('hidden');
+            
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+                navigation.style.display = 'flex';
+                //musicControl.style.display = 'block';
+                startSlideShow();
+            }, 1500);
+
+            playBackgroundMusic(true);
+
+        }
+
+        function startSlideShow() {
+            slideInterval = setInterval(() => {
+                nextSlide();
+            }, 6000);
+        }
+
+        function nextSlide() {
+            const slides = document.querySelectorAll('.slide');
+            const navDots = document.querySelectorAll('.nav-dot');
+            
+            slides[currentSlide].classList.remove('active');
+            navDots[currentSlide].classList.remove('active');
+            
+            currentSlide = (currentSlide + 1) % slides.length;
+            
+            setTimeout(() => {
+                slides[currentSlide].classList.add('active');
+                navDots[currentSlide].classList.add('active');
+            }, 400);
+        }
+
+        function goToSlide(index) {
+            if (index === currentSlide) return;
+            
+            clearInterval(slideInterval);
+            
+            const slides = document.querySelectorAll('.slide');
+            const navDots = document.querySelectorAll('.nav-dot');
+            
+            slides[currentSlide].classList.remove('active');
+            navDots[currentSlide].classList.remove('active');
+            
+            currentSlide = index;
+            
+            slides[currentSlide].classList.add('active');
+            navDots[currentSlide].classList.add('active');
+            
+            setTimeout(() => {
+                startSlideShow();
+            }, 500);
+        }
+
+        function toggleMusic() {
+            const musicControl = document.getElementById('musicControl');
+            
+            if (musicPlaying) {
+                musicControl.textContent = '';
+                playBackgroundMusic(false);
+            } else {
+                musicControl.textContent = '🎵';
+                playBackgroundMusic(true);
+            }
+            
+            musicPlaying = !musicPlaying;
+        }
+
+        
+        // Función para agregar música de fondo (necesitarás un archivo de audio)
+        let backgroundAudio = null; // variable global para controlar el audio
+
+        function playBackgroundMusic(check = false) {
+            if (check) {
+                if (!backgroundAudio) {
+                    backgroundAudio = new Audio('justin-cortado.mp3');
+                    backgroundAudio.loop = true;
+                    backgroundAudio.volume = 0.3;
+                    backgroundAudio.play().catch(e => console.log('Error reproduciendo música:', e));
+                }
+            } else {
+                console.log('pausando musica');
+                if (backgroundAudio) {
+                    backgroundAudio.pause();
+                    //backgroundAudio.currentTime = 0;
+                    backgroundAudio = null;
+                }
+            }
+        }
+
+
+        // Gestión de visibilidad
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                clearInterval(slideInterval);
+            } else if (document.getElementById('mainContent').classList.contains('visible')) {
+                startSlideShow();
+            }
+        });
+
+        // Prevenir zoom en móviles
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
